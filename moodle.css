@@ -1,0 +1,140 @@
+window.darkmodestyle = document.createElement('style');
+darkmodestyle.id = 'dms'
+darkmodestyle.innerText = `body {
+    background-color: #2c2c2c;
+    color:white;
+}
+a {
+    color: #5bb2ff;
+}
+a:hover {
+    color: #319fff;
+}
+#nav-drawer {
+    background-color: #2c2c2c;
+}
+.card-body {
+    background-color: #333;
+}
+.fixed-top, .list-group-item {
+    background-color: #333 !important;
+    color:white;
+}
+.nav-link, .site-name {
+    color:white !important;
+    border:none;
+}
+.btn {
+    background-color: #333 !important;
+    color:white !important;
+}
+.region_main_settings_menu_proxy {
+    background-color: #333 !important;
+}
+.resourcelinkdetails {
+    color:rgb(161, 161, 161);
+}
+.notification-message {
+    color:black;
+}
+.content-item-body {
+    color:black;
+}
+.tab {
+    background-color: #333 !important;
+}
+.response {
+    background-color: #2c2c2c !important;
+}
+
+.message-text-container textarea, .searchtextarea, .searchtextarea input{
+    background-color: #2c2c2c !important;
+    color:white;
+}
+.node_category {
+    background-color: #2c2c2c !important;
+}
+
+.card-header {
+    background-color: #2c2c2c;
+    /* border-bottom: #333333; */
+} 
+
+.element {
+    color:white !important;
+}
+`;
+
+if(localStorage.getItem('dark') === 'true') {
+    document.getElementsByTagName('head')[0].appendChild(darkmodestyle);
+}
+
+function setDarkMode() {
+    if(localStorage.getItem('dark') === 'true') {
+        localStorage.setItem('dark', 'false')
+        document.getElementById('dms').remove()
+        document.getElementById('mbody').innerHTML = 'Enable dark mode'
+    } else {
+        localStorage.setItem('dark', 'true')
+        document.getElementsByTagName('head')[0].appendChild(darkmodestyle);
+        document.getElementById('mbody').innerHTML = 'Disable dark mode'
+    }
+
+}
+
+function init() {
+
+    let navdiv = document.createElement('nav');
+    navdiv.classList.add('list-group');
+    navdiv.classList.add('m-t-1');
+    let navitem = document.createElement('div');
+    navitem.setAttribute('onclick', 'setDarkMode()')
+   navdiv.appendChild(navitem);
+    navitem.classList.add('list-group-item');
+    navitem.setAttribute('style', `-webkit-touch-callout: none;/
+    -webkit-user-select: none; 
+    -khtml-user-select: none; 
+    -moz-user-select: none; 
+    -ms-user-select: none;  
+    user-select: none; `)
+    let innernav = document.createElement('div');
+    navitem.appendChild(innernav)
+    innernav.classList.add('m-l-0')
+    let media = document.createElement('div');
+    innernav.appendChild(media);
+    media.classList.add('media');
+    let media_left = document.createElement('span');
+    let media_body = document.createElement('span');
+    media_left.classList.add('media-left');
+    media_body.classList.add('media-body');
+    media_body.id = 'mbody'
+    let i = document.createElement('i');
+    i.classList.add('icon');
+    i.classList.add('fa');
+    i.classList.add('fa-fw');
+    i.innerHTML = '☀';
+    media_left.appendChild(i);
+    media_body.innerHTML = localStorage.getItem('dark') === 'true' ? 'Disable dark mode' : 'Enable dark mode';
+    media.appendChild(media_left);
+    media.appendChild(media_body);
+    document.getElementById('nav-drawer').appendChild(navdiv);
+
+    return true
+
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    console.log('loaded')
+    await init();
+    
+    window.transitionstyle = document.createElement('style');
+    transitionstyle.innerText = `body, #nav-drawer, .card-body, .fixed-top, .list-group-item, .nav-link, .site-name, .node_category {
+        -webkit-transition:all .5s !important;
+        -moz-transition:all .5s !important;
+        -o-transition:all .5s !important;
+        transition:all .5s !important;
+    }`
+    document.getElementsByTagName('head')[0].appendChild(transitionstyle); 
+    
+})
+
